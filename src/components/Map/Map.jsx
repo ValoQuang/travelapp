@@ -11,8 +11,22 @@ const Map = () => {
   const matches = useMediaQuery('(min-width:600px)');
   const classes = useStyles();
 
+  const coordinates = {lat: 0, long: 0}
   return (
-    <div>Map</div>
+    <div className={classes.mapContainer}>
+      <GoogleMapReact
+        bootstrapURLKeys={{key:process.env.GOOGLE_API}}
+        defaultCenter={coordinates}
+        center={coordinates}
+        defaultZoom={14}
+        margin= {[50,50,50,50]}
+        options={""}
+        onChange={""}
+        onChildClick={""}
+      >
+
+      </GoogleMapReact>
+    </div>
   )
 }
 
