@@ -6,9 +6,10 @@ import Rating from '@material-ui/lab/Rating';
 
 import useStyles from './styles.js';
 
-const PlaceDetails = () => {
+//prop got from Map components
+const PlaceDetails = ({place}) => {
   return (
-    <div>PlaceDetails</div>
+    <div>{place.name}</div>
   )
 }
 
