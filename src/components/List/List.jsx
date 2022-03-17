@@ -4,10 +4,18 @@ import { CircularProgress, Grid, Typography, InputLabel, MenuItem, FormControl, 
 import PlaceDetails from '../PlaceDetails/PlaceDetails';
 import useStyles from './styles.js';
 
-const List = ({places}) => {
+const List = ({places, childClick}) => {
   const classes = useStyles();
   const [type, setType] = useState('restaurants');
   const [rating, setRating] = useState('');
+  const [elRefs, setElRefs] = useState([]);
+
+  //once we get places list from API, 
+  //then we filling the array then map all over the array
+  //map(_, i) ... _ mean ignore first params 
+  useEffect(() => {
+    setElRefs((refs) => Array(places.length).fill().map((_, i) => refs[i] || createRef()));
+  }, [places]);
 
   return (
     <div className={classes.container}>
@@ -34,7 +42,7 @@ const List = ({places}) => {
           <Grid container spacing={3} className={classes.list}>
             {places?.map((place,i)=> (
               <Grid item key={i} xs = {12}>
-                  <PlaceDetails place={places}/>
+                  <PlaceDetails selected={Number(childClicked) === i} refProp={elRefs[i]} place={place} />
               </Grid>
             ))}
           </Grid>
