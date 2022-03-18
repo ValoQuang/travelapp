@@ -7,31 +7,31 @@ import Rating from '@material-ui/lab/Rating';
 import mapStyles from '../../mapStyles';
 import useStyles from './styles.js';
 
-const Map = ({coords, setCoords, setBounds, places, setChildClick}) => {
+const Map = ({ coords, places, setCoords, setBounds, setChildClicked, weatherData }) => {
   const matches = useMediaQuery('(min-width:600px)');
   const classes = useStyles();
 
   return (
     <div className={classes.mapContainer}>
-      {/* those val got from google API */}
       <GoogleMapReact
-        bootstrapURLKeys={{key:process.env.GOOGLE_API}}
+        bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAP_API_KEY }}
         defaultCenter={coords}
         center={coords}
         defaultZoom={14}
-        margin= {[50,50,50,50]}
+        margin={[50, 50, 50, 50]}
         options={{ disableDefaultUI: true, zoomControl: true, styles: mapStyles }}
-        onChange={(e)=> {
-          setBounds({ne: e.marginBounds.ne, sw: e.marginBounds.sw})
-          setCoords({lat: e.center.lat, lng: e.center.lng})}}
-        onChildClick={(child)=>{setChildClick(child)}}
+        onChange={(e) => {
+          setCoords({ lat: e.center.lat, lng: e.center.lng });
+          setBounds({ ne: e.marginBounds.ne, sw: e.marginBounds.sw });
+        }}
+        onChildClick={(child) => setChildClicked(child)}
       >
-
-        {places?.map((place,i)=> (
-          <div className={classes.markerContainer}
-                lat={Number(place.latitude)}
-                lng={Number(place.longtitude)}
-                key= {i}
+        {places.length && places.map((place, i) => (
+          <div
+            className={classes.markerContainer}
+            lat={Number(place.latitude)}
+            lng={Number(place.longitude)}
+            key={i}
           >
             {!matches
               ? <LocationOnOutlinedIcon color="primary" fontSize="large" />
@@ -47,9 +47,14 @@ const Map = ({coords, setCoords, setBounds, places, setChildClick}) => {
               )}
           </div>
         ))}
+        {weatherData?.list?.length && weatherData.list.map((data, i) => (
+          <div key={i} lat={data.coord.lat} lng={data.coord.lon}>
+            <img src={`http://openweathermap.org/img/w/${data.weather[0].icon}.png`} height="70px" />
+          </div>
+        ))}
       </GoogleMapReact>
     </div>
-  )
-}
+  );
+};
 
-export default Map
+export default Map;

@@ -6,7 +6,6 @@ import Rating from '@material-ui/lab/Rating';
 
 import useStyles from './styles.js';
 
-//prop got from Map components
 const PlaceDetails = ({ place, selected, refProp }) => {
   if (selected) refProp?.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   const classes = useStyles();
@@ -19,7 +18,7 @@ const PlaceDetails = ({ place, selected, refProp }) => {
         title={place.name}
       />
       <CardContent>
-      <Typography gutterBottom variant="h5">{place.name}</Typography>
+        <Typography gutterBottom variant="h5">{place.name}</Typography>
         <Box display="flex" justifyContent="space-between" my={2}>
           <Rating name="read-only" value={Number(place.rating)} readOnly />
           <Typography component="legend">{place.num_reviews} review{place.num_reviews > 1 && 's'}</Typography>
@@ -36,7 +35,6 @@ const PlaceDetails = ({ place, selected, refProp }) => {
             {place.ranking}
           </Typography>
         </Box>
-
         {place?.awards?.map((award) => (
           <Box display="flex" justifyContent="space-between" my={1} alignItems="center">
             <img src={award.images.small} />
@@ -56,9 +54,8 @@ const PlaceDetails = ({ place, selected, refProp }) => {
             <PhoneIcon /> {place.phone}
           </Typography>
         )}
-        </CardContent>
-
-        <CardActions>
+      </CardContent>
+      <CardActions>
         <Button size="small" color="primary" onClick={() => window.open(place.web_url, '_blank')}>
           Trip Advisor
         </Button>
@@ -67,7 +64,7 @@ const PlaceDetails = ({ place, selected, refProp }) => {
         </Button>
       </CardActions>
     </Card>
-  )
-}
+  );
+};
 
-export default PlaceDetails
+export default PlaceDetails;
